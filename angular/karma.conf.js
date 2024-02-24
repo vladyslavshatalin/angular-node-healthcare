@@ -28,12 +28,13 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
-    singleRun: true,
+    browsers: ['Chrome'],
+    singleRun: false,
     junitReporter: {
       useBrowserName: false,
       outputFile : 'unit.xml',
       suite: 'unit'
-    }
+    },
+    browserDisconnectTimeout : 5000
   });
 };
