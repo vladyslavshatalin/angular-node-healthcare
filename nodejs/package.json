@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "lint": "eslint ./test -o eslint.xml -f junit;exit 0;",
+    "pretest": "copy \"API\" \"APITest\"",
     "test": "mocha --timeout 10000 --reporter mocha-junit-reporter",
-    "coverage": "istanbul cover -x 'middleware.js' -x 'handlers/handler.js' --report clover --report html _mocha test"
+    "coverage": "istanbul cover -x \"middleware.js\" -x \"handlersTest/handler.js\" --report clover --report html node_modules/mocha/bin/_mocha test"
   },
   "author": "",
   "license": "ISC",
