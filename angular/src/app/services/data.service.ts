@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
@@ -14,7 +15,7 @@ import { ApiService } from './api.service';
 @Injectable()
 export class DataService {
 
-  userId : string;
+  userId: string;
 
   constructor(private api: ApiService) {
 
@@ -29,14 +30,34 @@ export class DataService {
 
     // return false if user not authenticated 
 
-    return;
+    return this.api.checkLogin(username, password).pipe(
+      map((response: any) => {
+        // Assuming your API response contains 'uid' and 'token'
+        const uid = response.uid;
+        const token = response.token;
+
+        // Store 'uid' and 'token' in local storage
+        localStorage.setItem('uid', uid);
+        localStorage.setItem('token', token);
+
+        // Return true if user authenticated
+        return true;
+      }),
+      catchError((error) => {
+        // Handle authentication error (e.g., invalid credentials)
+        console.error('Authentication failed:', error);
+        return of(false); // Return false if user not authenticated
+      })
+    );
   }
 
   getAuthStatus(): Observable<boolean> {
 
     // return true/false as a auth status
+    const token = localStorage.getItem('token');
+    const isAuthenticated = !!token;
 
-    return;
+    return of(isAuthenticated);
   }
 
   regNewUser(regNewUser): Observable<any> {
@@ -96,7 +117,7 @@ export class DataService {
 
     return;
   }
-  
+
   diseasesList(): Observable<any> {
 
     // should return response retrieved from ApiService

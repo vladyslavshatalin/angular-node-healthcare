@@ -2,9 +2,10 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { catchError, map } from 'rxjs/operators';
 
 import { Credentials } from '../models/credentials.model';
 import { Users } from '../models/users';
@@ -26,8 +27,30 @@ export class ApiService {
     // should return response from server
 
     // handle error 
+    const body = {
+      uname: uname,
+      pwd: pwd
+    }; // Create request body
 
-    return;
+    // Make an HTTP POST request to your login endpoint
+    return this.http.post(`${this.API_URL}/login`, body).pipe(
+      map((response: any) => {
+
+        return response;
+      }),
+      catchError((error) => {
+
+        // Unauthorized (invalid credentials)
+        throw new HttpErrorResponse({
+          error: {
+            message: 'Invalid username or password'
+          },
+          status: 401,
+          statusText: 'Invalid username or password'
+        });
+      })
+    );
+
   }
 
   public regNewUser(regNewUser): Observable<any> {
@@ -128,5 +151,5 @@ export class ApiService {
   private handleError(error: Response | any) {
     return Observable.throw(error);
   }
-  
+
 }

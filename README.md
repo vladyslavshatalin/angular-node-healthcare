@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.1.
 
-install node 18.13.0 and run this project with that. 
+install node 14.20.1 and run this project with that. 
 
 npm i --legacy-peer-deps
 

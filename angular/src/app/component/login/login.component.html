@@ -6,27 +6,27 @@
       <h2 >LOGIN</h2>
     </div>
     <div class="login-form-wrapper" >
-      <form class="ro-form">
-        <div class="form-group">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="ro-form">
+        <div class="form-group" >
           <label class="labelHead" for="username">
             <b>Username</b>
           </label>
-          <input type="text" id="username" placeholder="username">
+          <input type="text" id="username" placeholder="username" formControlName="userName">
 
           <div class="form-error-messages"
-            id="error-no-username">
+            id="error-no-username" *ngIf="loginForm.get('userName').hasError('required')">
             {{emptyUserName}}
           </div>
           <div class="form-error-messages"
-            id="error-minlength-username">
+            id="error-minlength-username" *ngIf="loginForm.get('userName').hasError('minlength')">
             {{minlengthUserName}}
           </div>
           <div class="form-error-messages"
-            id="error-maxlength-username">
+            id="error-maxlength-username" *ngIf="loginForm.get('userName').hasError('maxlength')">
             {{maxlengthUserName}}
           </div>
           <div class="form-error-messages"
-            id="error-pattern-username">
+            id="error-pattern-username" *ngIf="loginForm.get('userName').hasError('pattern')">
             {{userNamePattern}}
           </div>
         </div>
@@ -34,21 +34,21 @@
           <label class="labelHead" for="password">
             <b>Password</b>
           </label>
-          <input type="password" id="password" placeholder="password">
+          <input type="password" id="password" placeholder="password" formControlName="password">
           <div class="form-error-messages"
-            id="error-no-password">
+            id="error-no-password" *ngIf="loginForm.get('password').hasError('required')">
             {{emptyPassword}}
           </div>
           <div class="form-error-messages"
-            id="error-minlength-password">
+            id="error-minlength-password" *ngIf="loginForm.get('password').hasError('minlength')">
             {{minlengthPassword}}
           </div>
           <div class="form-error-messages"
-            id="error-maxlength-password">
+            id="error-maxlength-password" *ngIf="loginForm.get('password').hasError('maxlength')">
             {{maxlengthPassword}}
           </div>
           <div class="form-error-messages"
-            id="error-pattern-password">
+            id="error-pattern-password" *ngIf="loginForm.get('password').hasError('pattern')">
             {{passwordPattern}}
           </div>
         </div>
@@ -60,7 +60,7 @@
           <button id="loginBtn" class="login-btn" type="submit">Login</button>
 
           <!-- call signUp method when clicking on this button-->
-          <button id="signupBtn" class="guest-btn">Sign up</button>
+          <button id="signupBtn" class="guest-btn" (click)="signUp()">Sign up</button>
         </div>
         
       </form>

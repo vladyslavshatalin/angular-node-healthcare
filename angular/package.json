@@ -36,8 +36,8 @@
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
-    "@angular-devkit/core": "^17.2.1",
     "@angular/cli": "~1.7.1",
+    "@angular-devkit/core": "~0.7.0",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
     "@types/jasmine": "2.8.6",
@@ -58,7 +58,7 @@
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "tslint-junit-formatter": "^5.1.0",
-    "typescript": "~2.9.2",
+    "typescript": "^2.6.2",
     "xml-js": "^1.6.2",
     "xml2js": "^0.4.19",
     "xmlbuilder": "^9.0.7"
