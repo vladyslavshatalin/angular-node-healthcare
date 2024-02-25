@@ -80,7 +80,7 @@ export class RegisterNewUserComponent implements OnInit {
     const newReqBody = {
       email: this.signupForm.value.email,
       location: this.signupForm.value.location,
-      mobile: this.signupForm.value.email,
+      mobile: this.signupForm.value.mobile,
       pwd: this.signupForm.value.password,
       uname: this.signupForm.value.userName
     }

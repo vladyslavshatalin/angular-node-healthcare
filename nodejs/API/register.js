@@ -21,23 +21,20 @@ module.exports = function (req, res) {
       return res.status(400).json({ error: "user already exists" });
     } */
     // const userWithoutuname = (({ uname, ...o }) => o)(req.body)
-    const attemptedUser = req.body;
-    const userWithoutuname = {};
-    for (const key in attemptedUser) {
-      if (key !== 'pwd') {
-        userWithoutuname[key] = attemptedUser[key];
-      }
-    }
+    
     const newUser = {
       _id: new mongoose.Types.ObjectId(),
       userName: req.body.uname,
-      userWithoutuname
+      pwd: req.body.pwd,
+      email: req.body.email,
+      location: req.body.location,
+      mobile: Number(req.body.mobile)
     }
     console.log('about to create', newUser)
     user.create(newUser, function (error, createdData) {
-      /* if (error) {
-        return res.status(400).json({ error: err });
-      } */
+      if (error) {
+        return res.status(400).json({ error: error });
+      }
       return res.status(200).json({ status: "success" });
     })
   });
