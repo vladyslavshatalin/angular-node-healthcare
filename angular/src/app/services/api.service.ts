@@ -2,7 +2,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map } from 'rxjs/operators';
@@ -31,17 +31,16 @@ export class ApiService {
       uname: uname,
       pwd: pwd
     }; // Create request body
+    
 
     // Make an HTTP POST request to your login endpoint
     return this.http.post(`${this.API_URL}/login`, body).pipe(
       map((response: any) => {
-
         return response;
       }),
-      catchError((error) => {
-
+      catchError(() => {
         // Unauthorized (invalid credentials)
-        throw new HttpErrorResponse({
+        return Observable.throw({
           error: {
             message: 'Invalid username or password'
           },
