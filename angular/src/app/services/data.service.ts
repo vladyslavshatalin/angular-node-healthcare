@@ -65,8 +65,15 @@ export class DataService {
     // should return response retrieved from ApiService
 
     // handle error 
-
-    return;
+    return this.api.regNewUser(regNewUser).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('signup failed:', error);
+        return error;
+      })
+    );
   }
 
   doLogOut() {

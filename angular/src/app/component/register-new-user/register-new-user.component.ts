@@ -14,8 +14,8 @@ import { Users } from '../../models/users';
 
 export class RegisterNewUserComponent implements OnInit {
 
-	regNewUser = new Users;
-	signupForm: FormGroup;
+  regNewUser = new Users;
+  signupForm: FormGroup;
 
   emptyUserName = 'You must enter a username';
   minlengthUserName = 'User name must be at least 3 characters long';
@@ -32,19 +32,43 @@ export class RegisterNewUserComponent implements OnInit {
   locationErrMsg = 'You must enter the location';
 
   constructor(private route: Router, private dataService: DataService) {
-   }
+  }
 
   ngOnInit() {
 
     // add necessary validators
 
-  	this.signupForm = new FormGroup({
-  		userName: new FormControl(''),
-  		password: new FormControl(''),
-      mobile: new FormControl(''),
-      email: new FormControl(''),
-      location: new FormControl('')
-  	});
+    this.signupForm = new FormGroup({
+      userName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-zA-Z0-9]*$/)
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(20),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!$%@#*?&£€])[A-Za-z\d!$%@#*?&£€]*$/)
+      ]),
+      mobile: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]{10}$')
+      ]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]),
+      location: new FormControl('', [
+        Validators.required])
+    });
+  }
+
+  onSubmit() {
+    if (!this.signupForm.valid) {
+      return;
+    }
+    this.signUp()
   }
 
   signUp() {
@@ -52,14 +76,34 @@ export class RegisterNewUserComponent implements OnInit {
     // call regNewUser method to perform signup operation
     // if success, redirect to login page
     // else display appropriate error message
-       // reset the form
-    
+    // reset the form
+    const newReqBody = {
+      email: this.signupForm.value.email,
+      location: this.signupForm.value.location,
+      mobile: this.signupForm.value.email,
+      pwd: this.signupForm.value.password,
+      uname: this.signupForm.value.userName
+    }
+    this.dataService.regNewUser(newReqBody).subscribe(
+      (response) => {
+        // Successful login
+        if (!response) {
+          return;
+        }
+        this.route.navigate(['/login']);
+      },
+      (error) => {
+        // Handle login error (display error message, etc.)
+        this.signupForm.reset();
+      }
+    );
+
   }
 
   goBack() {
 
     // should navigate to login page
-
+    this.route.navigate(['/login']);
   }
 
 }

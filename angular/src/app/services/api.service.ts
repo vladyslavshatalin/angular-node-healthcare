@@ -31,7 +31,7 @@ export class ApiService {
       uname: uname,
       pwd: pwd
     }; // Create request body
-    
+
 
     // Make an HTTP POST request to your login endpoint
     return this.http.post(`${this.API_URL}/login`, body).pipe(
@@ -56,8 +56,19 @@ export class ApiService {
     // should return response from server
 
     // handle error 
+    return this.http.post(`${this.API_URL}/register`, regNewUser).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password'
+        });
+      })
+    );
 
-    return;
   }
 
   public getUserDetails(userId: string): Observable<any> {
