@@ -64,7 +64,10 @@ export class ApiService {
         // Unauthorized (invalid credentials)
         return Observable.throw({
           status: error.status,
-          statusText: 'Invalid username or password'
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
         });
       })
     );
