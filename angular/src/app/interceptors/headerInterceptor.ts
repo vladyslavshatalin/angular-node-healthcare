@@ -23,12 +23,12 @@ export class HeaderInterceptor implements HttpInterceptor {
 
     // should add authorization token into headers except login and signup
     // Add your authentication token logic here (e.g., retrieve token from local storage)
-    const token = 'your-auth-token'; // Replace with your actual token
+    const token = localStorage.getItem('token');
 
     // Clone the request and add the token to the headers
     const modifiedReq = request.clone({
       setHeaders: {
-        [this.AUTH_HEADER]: `Bearer ${token}` // Assuming Bearer token format
+        [this.AUTH_HEADER]: `${token}` // Assuming Bearer token format
       }
     });
 
