@@ -78,8 +78,21 @@ export class ApiService {
     // should return user details retireved from server
 
     // handle error 
-
-    return;
+    return this.http.get(`${this.API_URL}/getProfile?uid=${userId}`).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   public updateDetails(userDetails: any): Observable<any> {
@@ -87,7 +100,21 @@ export class ApiService {
 
     // handle error 
 
-    return;
+    return this.http.put(`${this.API_URL}/editProfile`, userDetails).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   public registerPatient(patientDetails: any): Observable<any> {
@@ -95,7 +122,21 @@ export class ApiService {
 
     // handle error 
 
-    return;
+    return this.http.post(`${this.API_URL}/addPatient`, patientDetails).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   public getAllPatientsList(): Observable<any> {
@@ -104,7 +145,21 @@ export class ApiService {
 
     // handle error 
 
-    return;
+    return this.http.get(`${this.API_URL}/fetchPatient`).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   public getParticularPatient(patientId): Observable<any> {
@@ -113,7 +168,21 @@ export class ApiService {
 
     // handle error 
 
-    return;
+    return this.http.get(`${this.API_URL}/fetchSinglePatient?patientId=${patientId}`).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   public diseasesList(): Observable<any> {
@@ -122,7 +191,21 @@ export class ApiService {
 
     // handle error 
 
-    return;
+    return this.http.get(`${this.API_URL}/diseases`).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   public scheduleAppointment(appointmentDetails: any): Observable<any> {
@@ -131,7 +214,21 @@ export class ApiService {
 
     // handle error 
 
-    return;
+    return this.http.post(`${this.API_URL}/bookAppointment`, appointmentDetails).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   public requestedAppointments(): Observable<any> {
@@ -140,7 +237,21 @@ export class ApiService {
 
     // handle error 
 
-    return;
+    return this.http.get(`${this.API_URL}/fetchAppointment`).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   public getSinglePatientAppointments(patientId): Observable<any> {
@@ -149,7 +260,21 @@ export class ApiService {
 
     // handle error 
 
-    return;
+    return this.http.get(`${this.API_URL}/singlePatientAppointments?patientId=${patientId}`).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   public deleteAppointment(appointmentId): Observable<any> {
@@ -158,7 +283,21 @@ export class ApiService {
 
     // handle error
 
-    return;
+    return this.http.delete(`${this.API_URL}/deleteAppointment?appointmentId=${appointmentId}`).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        // Unauthorized (invalid credentials)
+        return Observable.throw({
+          status: error.status,
+          statusText: 'Invalid username or password',
+          error: {
+            message: 'Invalid username or password'
+          }
+        });
+      })
+    );
   }
 
   private handleError(error: Response | any) {
