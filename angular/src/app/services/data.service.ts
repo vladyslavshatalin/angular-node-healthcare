@@ -79,14 +79,22 @@ export class DataService {
   doLogOut() {
 
     // You should remove the key 'uid', 'token' if exists
-
+    localStorage.removeItem('uid');
+    localStorage.removeItem('token');
   }
 
   getUserDetails(): Observable<any> {
 
     // should return user details retrieved from api service
-
-    return;
+    return this.api.getUserDetails(localStorage.getItem('uid')).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('get user details failed:', error);
+        return error;
+      })
+    );
   }
 
   updateProfile(userDetails): Observable<boolean> {
@@ -95,7 +103,15 @@ export class DataService {
 
     // handle error 
 
-    return;
+    return this.api.updateDetails(userDetails).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('update userdetails failed:', error);
+        return error;
+      })
+    );
   }
 
   registerPatient(patientDetails): Observable<any> {
@@ -104,7 +120,15 @@ export class DataService {
 
     // handle error 
 
-    return;
+    return this.api.registerPatient(patientDetails).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('resigster patient failed:', error);
+        return error;
+      })
+    );
   }
 
   getAllPatientsList(): Observable<any> {
@@ -113,7 +137,15 @@ export class DataService {
 
     // handle error 
 
-    return;
+    return this.api.getAllPatientsList().pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('get all patient list failed:', error);
+        return error;
+      })
+    );
   }
 
   getParticularPatient(id): Observable<any> {
@@ -122,7 +154,15 @@ export class DataService {
 
     // handle error 
 
-    return;
+    return this.api.getParticularPatient(id).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('particular patient details failed:', error);
+        return error;
+      })
+    );
   }
 
   diseasesList(): Observable<any> {
@@ -131,7 +171,15 @@ export class DataService {
 
     // handle error 
 
-    return;
+    return this.api.diseasesList().pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('disease list failed:', error);
+        return error;
+      })
+    );
   }
 
   scheduleAppointment(appointmentDetails): Observable<any> {
@@ -140,7 +188,15 @@ export class DataService {
 
     // handle error 
 
-    return;
+    return this.api.scheduleAppointment(appointmentDetails).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('schedule appointment failed:', error);
+        return error;
+      })
+    );
   }
 
   getSinglePatientAppointments(patientId): Observable<any> {
@@ -149,7 +205,15 @@ export class DataService {
 
     // handle error 
 
-    return;
+    return this.api.getSinglePatientAppointments(patientId).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('single patient appointments failed:', error);
+        return error;
+      })
+    );
   }
 
   deleteAppointment(appointmentId): Observable<any> {
@@ -158,7 +222,15 @@ export class DataService {
 
     // handle error 
 
-    return;
+    return this.api.deleteAppointment(appointmentId).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('appointment deletion failed:', error);
+        return error;
+      })
+    );
   }
 
   requestedAppointments(): Observable<any> {
@@ -167,7 +239,15 @@ export class DataService {
 
     // handle error 
 
-    return;
+    return this.api.requestedAppointments().pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('requested appointments failed:', error);
+        return error;
+      })
+    );
   }
 
 
