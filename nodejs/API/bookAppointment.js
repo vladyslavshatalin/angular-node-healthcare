@@ -19,18 +19,26 @@ module.exports = function (req, res) {
          console.log('user with same appointment exist')
          return res.status(400).json({ error: "appointment already exists" });
       } */
-      const body = req.body;
-      const newAppointment = Object.assign({}, {_id: new mongoose.Types.ObjectId()},{body})
-      
+      const newAppointment = {
+         _id: new mongoose.Types.ObjectId(),
+         fname: req.body.fname,
+         lname: req.body.lname,
+         disease: req.body.disease,
+         priority: req.body.priority,
+         AppointmentDate: req.body.AppointmentDate,
+         patientId: req.body.patientId,
+         bookingTime: req.body.bookingTime
+      }
+
       /* const newAppointment = {
          _id: new mongoose.Types.ObjectId(),
          ...req.body
       } */
       console.log('about to create appointment', newAppointment)
       appointments.create(newAppointment, function (error, createdData) {
-         /* if (error) {
+         if (error) {
             return res.status(400).json({ error: err });
-         } */
+         }
          return res.status(200).json({ status: "success" });
       })
    });
