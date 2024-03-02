@@ -10,7 +10,7 @@ module.exports = function (req, res) {
    /*write your code here*/
    console.log("add patient entry", req.body);
    const body = req.body;
-   const newPatient = Object.assign({}, { _id: new mongoose.Types.ObjectId() }, { body })
+   const newPatient = Object.assign({}, { _id: new mongoose.Types.ObjectId() }, body)
    /* const newPatient = {
       _id: new mongoose.Types.ObjectId(),
       ...req.body

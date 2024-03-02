@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder,Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { Patient } from '../../models/patient';
@@ -38,26 +38,62 @@ export class FormComponent implements OnInit {
     this.today = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
   }
 
-  constructor( fb: FormBuilder,private datePipe: DatePipe,private route: Router, private dataService: DataService){
+  constructor(fb: FormBuilder, private datePipe: DatePipe, private route: Router, private dataService: DataService) {
 
     // add necessary validators
 
     this.complexForm = fb.group({
-      'firstName' : [''],
-      'lastName': [''],
-      'gender' : [null],
-      'dob' : [null],
-      'mobile' : [''],
-      'email' : [''],
-      'description' : ''
+      'firstName': ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20)
+      ]],
+      'lastName': ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20)
+      ]],
+      'gender': [null,
+        Validators.required,
+      ],
+      'dob': [null, Validators.required],
+      'mobile': ['', [
+        Validators.required,
+        Validators.pattern(/^(?!123456$)(?!1234567a9$)[0-9]{10,}$/),
+        Validators.maxLength(10)
+      ]],
+      'email': ['', Validators.email],
+      'description': ''
     })
   }
 
-  submitForm(value: any){
+  submitForm(value: any) {
 
     // should reister new patient using service
-       // fields that need to be added: userId, fname, lname, gender, dob, mobile, email, desc
+    // fields that need to be added: userId, fname, lname, gender, dob, mobile, email, desc
     // if added successfully should redirect to 'patientList' page
+    const payload ={
+      userId: localStorage.getItem('uid'),
+      fname: this.complexForm.controls['firstName'].value,
+      lname: this.complexForm.controls['lastName'].value,
+      gender: this.complexForm.controls['gender'].value,
+      dob: this.complexForm.controls['dob'].value,
+      mobile: this.complexForm.controls['mobile'].value,
+      email: this.complexForm.controls['email'].value,
+      desc: this.complexForm.controls['description'].value,
+    }
+    this.dataService.registerPatient(payload).subscribe(
+			(response) => {
+				// Successful login
+				if (!response) {
+					return;
+				}
+				this.route.navigate(['/patientList']);
+			},
+			(error) => {
+				// Handle login error (display error message, etc.)
+			}
+		);
 
   }
 
